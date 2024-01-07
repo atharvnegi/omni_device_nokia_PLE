@@ -14,18 +14,24 @@
 # limitations under the License.
 #
 
-# Specify phone tech before including full_phone
-$(call inherit-product, vendor/omni/config/gsm.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-$(call inherit-product, device/xiaomi/land/full_land.mk)
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
 
-# Inherit some common Omni stuff.
-$(call inherit-product, vendor/omni/config/common.mk)
+# Encryption
+PRODUCT_PACKAGES += \
+    libcryptfs_hw
 
-# Allow missing dependenciea
-ALLOW_MISSING_DEPENDENCIES=true
+# Kernel
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/kernel:kernel
 
-PRODUCT_NAME := omni_land
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hardware.keystore=msm8937
+# Device identifier. This must come after all inclusions
+PRODUCT_DEVICE := PLE
+PRODUCT_NAME := full_PLE
+PRODUCT_BRAND := Nokia
+PRODUCT_MODEL := Nokia 6 2017
+PRODUCT_MANUFACTURER := Nokia
